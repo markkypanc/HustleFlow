@@ -5,7 +5,10 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    ContentView w;
-    w.show();
+
+    ContentView contentView;
+    contentView.setFixedSize(800, 600);
+    contentView.show();
+
     return a.exec();
 }
