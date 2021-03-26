@@ -15,6 +15,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
 
@@ -24,6 +25,7 @@ class Ui_ContentView
 {
 public:
     QWidget *centralwidget;
+    QPushButton *pushButton;
     QStatusBar *statusbar;
     QMenuBar *menubar;
     QMenu *menuHustleFlow;
@@ -32,16 +34,20 @@ public:
     {
         if (ContentView->objectName().isEmpty())
             ContentView->setObjectName(QString::fromUtf8("ContentView"));
-        ContentView->resize(800, 600);
+        ContentView->resize(1200, 800);
         centralwidget = new QWidget(ContentView);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
+        pushButton = new QPushButton(centralwidget);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setGeometry(QRect(200, 600, 800, 100));
+        pushButton->setMinimumSize(QSize(701, 81));
         ContentView->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(ContentView);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
         ContentView->setStatusBar(statusbar);
         menubar = new QMenuBar(ContentView);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 21));
+        menubar->setGeometry(QRect(0, 0, 1200, 21));
         menuHustleFlow = new QMenu(menubar);
         menuHustleFlow->setObjectName(QString::fromUtf8("menuHustleFlow"));
         ContentView->setMenuBar(menubar);
@@ -56,6 +62,7 @@ public:
     void retranslateUi(QMainWindow *ContentView)
     {
         ContentView->setWindowTitle(QCoreApplication::translate("ContentView", "ContentView", nullptr));
+        pushButton->setText(QCoreApplication::translate("ContentView", "PushButton", nullptr));
         menuHustleFlow->setTitle(QCoreApplication::translate("ContentView", "HustleFlow", nullptr));
     } // retranslateUi
 

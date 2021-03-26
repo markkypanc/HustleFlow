@@ -2,22 +2,28 @@
 #define CONTENTVIEW_H
 
 #include <QMainWindow>
+#include <QNetworkAccessManager>
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class ContentView; }
-QT_END_NAMESPACE
+namespace Ui {
+class ContentView;
+}
 
-class QPushButton;
+
+// MARK: - MAIN CONTENT VIEW
 class ContentView : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    ContentView(QWidget *parent = nullptr);
+    explicit ContentView(QWidget *parent = nullptr);
     ~ContentView();
+
+private slots:
+    void on_pushButton_clicked();
+    void onManagerFinished(QNetworkReply *reply);
 
 private:
     Ui::ContentView *ui;
-    QPushButton *button;
+    QNetworkAccessManager manager;
 };
 #endif // CONTENTVIEW_H
