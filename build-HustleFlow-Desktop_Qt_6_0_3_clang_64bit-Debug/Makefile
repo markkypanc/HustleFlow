@@ -54,13 +54,13 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../HustleFlow/contentview.cpp \
 		../HustleFlow/main.cpp \
-		../HustleFlow/networkmanager.cpp moc_contentview.cpp \
-		moc_networkmanager.cpp
+		../HustleFlow/newsrowcustomview.cpp moc_contentview.cpp \
+		moc_newsrowcustomview.cpp
 OBJECTS       = contentview.o \
 		main.o \
-		networkmanager.o \
+		newsrowcustomview.o \
 		moc_contentview.o \
-		moc_networkmanager.o
+		moc_newsrowcustomview.o
 DIST          = ../../../Qt/6.0.3/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/6.0.3/clang_64/mkspecs/features/device_config.prf \
 		../../../Qt/6.0.3/clang_64/mkspecs/common/unix.conf \
@@ -177,9 +177,9 @@ DIST          = ../../../Qt/6.0.3/clang_64/mkspecs/features/spec_pre.prf \
 		../HustleFlow/HustleFlow.pro constants.h \
 		constants.h \
 		../HustleFlow/contentview.h \
-		../HustleFlow/networkmanager.h ../HustleFlow/contentview.cpp \
+		../HustleFlow/newsrowcustomview.h ../HustleFlow/contentview.cpp \
 		../HustleFlow/main.cpp \
-		../HustleFlow/networkmanager.cpp
+		../HustleFlow/newsrowcustomview.cpp
 QMAKE_TARGET  = HustleFlow
 DESTDIR       = 
 TARGET        = HustleFlow.app/Contents/MacOS/HustleFlow
@@ -469,8 +469,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/6.0.3/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents constants.h constants.h ../HustleFlow/contentview.h ../HustleFlow/networkmanager.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../HustleFlow/contentview.cpp ../HustleFlow/main.cpp ../HustleFlow/networkmanager.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents constants.h constants.h ../HustleFlow/contentview.h ../HustleFlow/newsrowcustomview.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../HustleFlow/contentview.cpp ../HustleFlow/main.cpp ../HustleFlow/newsrowcustomview.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../HustleFlow/contentview.ui $(DISTDIR)/
 	$(COPY_FILE) --parents HustleFlow_en_US.ts $(DISTDIR)/
 
@@ -507,9 +507,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../Qt/6.0.3/clang_64/mkspecs/features/data/dummy.cpp
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++1z $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk -mmacosx-version-min=10.14 -Wall -Wextra -dM -E -o moc_predefs.h ../../../Qt/6.0.3/clang_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_contentview.cpp moc_networkmanager.cpp
+compiler_moc_header_make_all: moc_contentview.cpp moc_newsrowcustomview.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_contentview.cpp moc_networkmanager.cpp
+	-$(DEL_FILE) moc_contentview.cpp moc_newsrowcustomview.cpp
 moc_contentview.cpp: ../HustleFlow/contentview.h \
 		../../../Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
@@ -517,14 +517,14 @@ moc_contentview.cpp: ../HustleFlow/contentview.h \
 		../../../Qt/6.0.3/clang_64/bin/moc
 	/Users/markkypanc/Qt/6.0.3/clang_64/bin/moc $(DEFINES) --include /Users/markkypanc/Desktop/HustleFlow/build-HustleFlow-Desktop_Qt_6_0_3_clang_64bit-Debug/moc_predefs.h -I/Users/markkypanc/Qt/6.0.3/clang_64/mkspecs/macx-clang -I/Users/markkypanc/Desktop/HustleFlow/HustleFlow -I/Users/markkypanc/Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers -I/Users/markkypanc/Qt/6.0.3/clang_64/lib/QtGui.framework/Headers -I/Users/markkypanc/Qt/6.0.3/clang_64/lib/QtNetwork.framework/Headers -I/Users/markkypanc/Qt/6.0.3/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/markkypanc/Qt/6.0.3/clang_64/lib ../HustleFlow/contentview.h -o moc_contentview.cpp
 
-moc_networkmanager.cpp: ../HustleFlow/networkmanager.h \
+moc_newsrowcustomview.cpp: ../HustleFlow/newsrowcustomview.h \
 		../../../Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
 		../../../Qt/6.0.3/clang_64/lib/QtCore.framework/Headers/QUrl \
 		../../../Qt/6.0.3/clang_64/lib/QtCore.framework/Headers/qurl.h \
 		moc_predefs.h \
 		../../../Qt/6.0.3/clang_64/bin/moc
-	/Users/markkypanc/Qt/6.0.3/clang_64/bin/moc $(DEFINES) --include /Users/markkypanc/Desktop/HustleFlow/build-HustleFlow-Desktop_Qt_6_0_3_clang_64bit-Debug/moc_predefs.h -I/Users/markkypanc/Qt/6.0.3/clang_64/mkspecs/macx-clang -I/Users/markkypanc/Desktop/HustleFlow/HustleFlow -I/Users/markkypanc/Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers -I/Users/markkypanc/Qt/6.0.3/clang_64/lib/QtGui.framework/Headers -I/Users/markkypanc/Qt/6.0.3/clang_64/lib/QtNetwork.framework/Headers -I/Users/markkypanc/Qt/6.0.3/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/markkypanc/Qt/6.0.3/clang_64/lib ../HustleFlow/networkmanager.h -o moc_networkmanager.cpp
+	/Users/markkypanc/Qt/6.0.3/clang_64/bin/moc $(DEFINES) --include /Users/markkypanc/Desktop/HustleFlow/build-HustleFlow-Desktop_Qt_6_0_3_clang_64bit-Debug/moc_predefs.h -I/Users/markkypanc/Qt/6.0.3/clang_64/mkspecs/macx-clang -I/Users/markkypanc/Desktop/HustleFlow/HustleFlow -I/Users/markkypanc/Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers -I/Users/markkypanc/Qt/6.0.3/clang_64/lib/QtGui.framework/Headers -I/Users/markkypanc/Qt/6.0.3/clang_64/lib/QtNetwork.framework/Headers -I/Users/markkypanc/Qt/6.0.3/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/markkypanc/Qt/6.0.3/clang_64/lib ../HustleFlow/newsrowcustomview.h -o moc_newsrowcustomview.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -553,6 +553,11 @@ contentview.o: ../HustleFlow/contentview.cpp ../HustleFlow/contentview.h \
 		../../../Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		ui_contentview.h \
+		../HustleFlow/newsrowcustomview.h \
+		../../../Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../Qt/6.0.3/clang_64/lib/QtCore.framework/Headers/QUrl \
+		../../../Qt/6.0.3/clang_64/lib/QtCore.framework/Headers/qurl.h \
 		../../../Qt/6.0.3/clang_64/lib/QtNetwork.framework/Headers/QNetworkAccessManager \
 		../../../Qt/6.0.3/clang_64/lib/QtNetwork.framework/Headers/qnetworkaccessmanager.h \
 		../../../Qt/6.0.3/clang_64/lib/QtNetwork.framework/Headers/QNetworkReply \
@@ -576,7 +581,9 @@ contentview.o: ../HustleFlow/contentview.cpp ../HustleFlow/contentview.h \
 		../../../Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers/QSpacerItem \
 		../../../Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers/qlayoutitem.h \
 		../../../Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers/QVBoxLayout \
-		../../../Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h
+		../../../Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		../../../Qt/6.0.3/clang_64/lib/QtGui.framework/Headers/QPalette \
+		../../../Qt/6.0.3/clang_64/lib/QtGui.framework/Headers/qpalette.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o contentview.o ../HustleFlow/contentview.cpp
 
 main.o: ../HustleFlow/main.cpp ../HustleFlow/contentview.h \
@@ -586,7 +593,7 @@ main.o: ../HustleFlow/main.cpp ../HustleFlow/contentview.h \
 		../../../Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../HustleFlow/main.cpp
 
-networkmanager.o: ../HustleFlow/networkmanager.cpp ../HustleFlow/networkmanager.h \
+newsrowcustomview.o: ../HustleFlow/newsrowcustomview.cpp ../HustleFlow/newsrowcustomview.h \
 		../../../Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt/6.0.3/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
 		../../../Qt/6.0.3/clang_64/lib/QtCore.framework/Headers/QUrl \
@@ -605,13 +612,13 @@ networkmanager.o: ../HustleFlow/networkmanager.cpp ../HustleFlow/networkmanager.
 		../../../Qt/6.0.3/clang_64/lib/QtCore.framework/Headers/qjsonobject.h \
 		../../../Qt/6.0.3/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../../Qt/6.0.3/clang_64/lib/QtCore.framework/Headers/qdebug.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o networkmanager.o ../HustleFlow/networkmanager.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o newsrowcustomview.o ../HustleFlow/newsrowcustomview.cpp
 
 moc_contentview.o: moc_contentview.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_contentview.o moc_contentview.cpp
 
-moc_networkmanager.o: moc_networkmanager.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_networkmanager.o moc_networkmanager.cpp
+moc_newsrowcustomview.o: moc_newsrowcustomview.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_newsrowcustomview.o moc_newsrowcustomview.cpp
 
 ####### Install
 

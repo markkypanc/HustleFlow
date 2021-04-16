@@ -14,7 +14,7 @@ class QByteArray;
 class QNetworkAccessManager;
 class QNetworkReply;
 class QPushButton;
-
+class QLabel;
 
 // MARK: - MAIN CONTENT VIEW
 class ContentView : public QMainWindow
@@ -47,13 +47,15 @@ private:
 private:
     int mLatestStoriesID[NUM_STORIES_SHOWED];
 
-    QPushButton * mButtonRefresh;
+    // UI
+    QLabel *topBarTitle;
+    QWidget *mPanelStories;
+    QPushButton *refreshButton;
 
-    QWidget * mPanelStories;
-
-    QNetworkAccessManager * mNetMan;
-    QNetworkReply * mNetReply;
-    QByteArray * mDataBuffer;
+    // FETCHING DATA
+    QNetworkAccessManager *mNetMan;
+    QNetworkReply *mNetReply;
+    QByteArray *mDataBuffer;
 
     int mCurrStory;
 

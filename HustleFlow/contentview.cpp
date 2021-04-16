@@ -1,6 +1,6 @@
 #include "contentview.h"
 #include "ui_contentview.h"
-#include "networkmanager.h"
+#include "newsrowcustomview.h"
 
 // Networking Handler
 #include <QNetworkAccessManager>
@@ -11,32 +11,32 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QJsonValue> // handle the data recieaved
+#include <QJsonValue> // handle the data receive
 
-// Interface
+// UI
 #include <QByteArray>
 #include <QLabel>
 #include <QPushButton>
 #include <QSpacerItem>
-#include <QVBoxLayout>
+#include <QVBoxLayout> // VStack
+#include <QPalette>
 
 #include <string>
 using namespace std;
 
-ContentView::ContentView(QWidget *parent)
-    : QMainWindow(parent)
+ContentView::ContentView(QWidget *parent): QMainWindow(parent)
     , mPanelStories(nullptr)
     , mNetMan(new QNetworkAccessManager(this))
     , mNetReply(nullptr)
     , mDataBuffer(new QByteArray)
 {
-//    ui->setupUi(this);
 
-    // WINDOW HEADER
+    // WINDOW'S TOP HEADER
     setWindowTitle("HustleFlow: Hacker News Reader");
 
-    const int WIN_W = 1024;
-    const int WIN_H = 550;
+    // WINDOW'S DIMENSIONS
+    const int WIN_W = 1180;
+    const int WIN_H = 620;
     setFixedSize(WIN_W, WIN_H);
 
     // create GUI
@@ -49,27 +49,43 @@ ContentView::~ContentView()
     delete ui;
 }
 
+// ======================================== CONTENT VIEW EXTENSIONS ========================================
+
+// UI
 void ContentView::BuildWindow()
 {
-    // -- MAIN WIDGET --
-    QWidget * content = new QWidget;
+
+    // BLANK WINDOW READY TO STORE WIDGETS
+    QWidget *content = new QWidget;
     setCentralWidget(content);
 
-    QVBoxLayout * layoutMain = new QVBoxLayout;
-    content->setLayout(layoutMain);
+    // APPLY VSTACK
+    QVBoxLayout *vstack = new QVBoxLayout;
+    content->setLayout(vstack);
 
-    // -- REFRESH BUTTON --
-    mButtonRefresh = new QPushButton("REFRESH");
-    mButtonRefresh->setFixedWidth(200);
+    // FONT EXTENSION
+    QFont titleFont;
+    titleFont.setPointSize(22);
+    titleFont.setBold(true);
 
-    layoutMain->addWidget(mButtonRefresh, 0, Qt::AlignHCenter);
+    // NAV BAR TITLE
+    QLabel *topBarTitle = new QLabel(QString("READ WHAT'S HAPPENING NOW"));
+    topBarTitle->setFont(titleFont);
 
-    connect(mButtonRefresh, &QPushButton::clicked, this, &ContentView::OnRefreshClicked);
+    // REFRESH BUTTON
+    refreshButton = new QPushButton("REFRESH");
+    refreshButton->setFixedWidth(200);
 
-    // -- VERT SPACER --
-    layoutMain->addSpacerItem(new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Expanding));
+    vstack->addWidget(topBarTitle, 0, Qt::AlignHCenter);
+    vstack->addWidget(refreshButton, 0, Qt::AlignHCenter);
+
+    connect(refreshButton, &QPushButton::clicked, this, &ContentView::OnRefreshClicked);
+
+    // VERT SPACER
+    vstack->addSpacerItem(new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Expanding));
 }
 
+// DATA FETCHING
 void ContentView::ReadStory()
 {
     const QString STR = QString("https://hacker-news.firebaseio.com/v0/item/%1.json").arg(mLatestStoriesID[mCurrStory++]);
@@ -81,6 +97,7 @@ void ContentView::ReadStory()
     connect(mNetReply, &QNetworkReply::finished, this, &ContentView::OnStoryReadFinished);
 }
 
+// DESTRUCTIVE FUNCTION
 void ContentView::NetworkCleanup()
 {
     mNetReply->deleteLater();
@@ -89,13 +106,15 @@ void ContentView::NetworkCleanup()
     mDataBuffer->clear();
 }
 
-// == PRIVATE SLOTS ==
+
+// PRIVATE SLOT
 void ContentView::OnRefreshClicked()
 {
     // disable button while processing data
-    mButtonRefresh->setEnabled(false);
+    refreshButton->setEnabled(false);
+    refreshButton->setText("FETCHING...");
 
-    // -- DOWNLOAD LIST OF STORIES --
+    // DOWNLOAD LIST OF STORIES
     const QUrl STORIES_LIST_URL("https://hacker-news.firebaseio.com/v0/newstories.json");
     mNetReply = mNetMan->get(QNetworkRequest(STORIES_LIST_URL));
 
@@ -103,11 +122,13 @@ void ContentView::OnRefreshClicked()
     connect(mNetReply, &QNetworkReply::finished, this, &ContentView::OnListReadFinished);
 }
 
+// FETCHING DATA
 void ContentView::OnDataReadyToRead()
 {
     mDataBuffer->append(mNetReply->readAll());
 }
 
+// APPENDING CUSTOM ROW LIST
 void ContentView::OnListReadFinished()
 {
     QJsonDocument doc = QJsonDocument::fromJson(*mDataBuffer);
@@ -135,22 +156,26 @@ void ContentView::OnListReadFinished()
     ReadStory();
 }
 
+
+// WRAPPED UP SHOWING THE CONTENTS THAT LINK TO HACKER-NEWS
 void ContentView::OnStoryReadFinished()
 {
+    refreshButton->setText("REFRESH");
+
     QJsonDocument doc = QJsonDocument::fromJson(*mDataBuffer);
 
-    // -- ADD STORY --
-    NetworkManager * entry = new NetworkManager(mCurrStory, doc.object());
+    // ADD STORY
+    NewsRowCustomView * entry = new NewsRowCustomView(mCurrStory, doc.object());
     mPanelStories->layout()->addWidget(entry);
 
-    // -- CLEAN UP --
+    // CLEAN UP
     NetworkCleanup();
 
-    // -- NEXT STORY OR FINISH --
+    // NEXT STORY OR FINISH
     if(mCurrStory < NUM_STORIES_SHOWED)
         ReadStory();
     else
-        mButtonRefresh->setEnabled(true);
+        refreshButton->setEnabled(true);
 }
 
 

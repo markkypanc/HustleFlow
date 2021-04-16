@@ -1,6 +1,6 @@
-#QT       += core gui
-#QT       += core network
-QT       += core gui network
+QT       += core gui
+QT       += core network
+#QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,13 +13,13 @@ CONFIG += c++11
 SOURCES += \
     contentview.cpp \
     main.cpp \
-    networkmanager.cpp
+    newsrowcustomview.cpp
 
 HEADERS += \
     constants.h \
     constants.h \
     contentview.h \
-    networkmanager.h
+    newsrowcustomview.h
 
 FORMS += \
     contentview.ui
