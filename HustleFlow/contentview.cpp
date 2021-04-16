@@ -11,7 +11,7 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QJsonValue> // handle the data recieved
+#include <QJsonValue> // handle the data recieaved
 
 // Interface
 #include <QByteArray>
@@ -23,7 +23,6 @@
 #include <string>
 using namespace std;
 
-
 ContentView::ContentView(QWidget *parent)
     : QMainWindow(parent)
     , mPanelStories(nullptr)
@@ -32,8 +31,9 @@ ContentView::ContentView(QWidget *parent)
     , mDataBuffer(new QByteArray)
 {
 //    ui->setupUi(this);
-    // == WINDOW SETTINGS ==
-    setWindowTitle("Simple Hacker News Reader");
+
+    // WINDOW HEADER
+    setWindowTitle("HustleFlow: Hacker News Reader");
 
     const int WIN_W = 1024;
     const int WIN_H = 550;
@@ -43,6 +43,7 @@ ContentView::ContentView(QWidget *parent)
     BuildWindow();
 }
 
+// DESTRUCTOR
 ContentView::~ContentView()
 {
     delete ui;
