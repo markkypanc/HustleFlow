@@ -1,5 +1,5 @@
 # HustleFlow
-HustleFlow: C++ Jobs Hunting application using Qt Framework
+HustleFlow: C++ real time news reading application using Qt Framework
 
 HustleFlow: Real Time News Reader with API
 In partnership with Firebase, YCombinator is making the public Hacker News data
