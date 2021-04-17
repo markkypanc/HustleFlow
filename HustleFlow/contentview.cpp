@@ -69,7 +69,7 @@ void ContentView::BuildWindow()
     titleFont.setBold(true);
 
     // NAV BAR TITLE
-    QLabel *topBarTitle = new QLabel(QString("READ WHAT'S HAPPENING NOW"));
+    QLabel *topBarTitle = new QLabel(QString("WHAT'S HAPPENING RIGHT NOW"));
     topBarTitle->setFont(titleFont);
 
     // REFRESH BUTTON
